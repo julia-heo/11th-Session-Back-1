@@ -1,0 +1,8 @@
+<h1>{{blog.title}}</h1>
+{{blog.date}}
+<br>
+{{blog.body}}
+
+<a href="{% url 'home' %}">홈으로</a>
+<a href="{% url 'delete' blog.id %}">삭제하기</a>
+<a href="{% url 'update_page' blog.id %}">수정하기</a>
