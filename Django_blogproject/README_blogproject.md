@@ -15,7 +15,7 @@ templates(html)에서 url호출. urls.py에서 해당 url이 views.py의 함수 
 
 
 2. Key Changes
--
+.
 
 
 3. Reference
