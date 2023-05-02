@@ -1,0 +1,14 @@
+<form method="GET" action="{% url 'search' %}">
+    <div>
+        {% for post in postf %}
+                <li><a href="{% url 'detail' pk=post.id %}">{{post.title}}</a></li>
+                <span>{{post.upload_time}}</span>
+        {% endfor %}
+    </div>
+  
+    <!--검색-->
+    <div id="search">
+      <input name="search" type="text">
+      <button class="btn btn-primary" type="submit">검색</button>
+    </div>
+</form>
