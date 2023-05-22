@@ -15,6 +15,7 @@ class Blog(models.Model):
     date=models.DateTimeField('date published') 
     body=models.TextField()
     hashtag=models.ManyToManyField(HashTag)
+    photo=models.ImageField(upload_to = "blog_photo", null=True, blank=True)
 
     def __str__(self):
         return self.title
