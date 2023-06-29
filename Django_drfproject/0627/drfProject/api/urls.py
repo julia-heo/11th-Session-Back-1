@@ -7,7 +7,9 @@ app_name='api'                  # app name작성 후 view와 url연결
 urlpatterns = [
     path("posts/", PostListView.as_view()),
     path('posts/<int:pk>',PostDetailView.as_view()),
-    path('comments/',CommentView.as_view())
+    path('comments/',CommentView.as_view()),
+    path('comments/<int:pk>',CommentDetailView.as_view())
+    
 ]
 
 
