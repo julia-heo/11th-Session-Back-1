@@ -12,3 +12,33 @@ class PostSerializer(serializers.ModelSerializer):               # 게시글 시
     class Meta:
         model=Post
         fields=['id','title','author','content','created_at','comment']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields=['id','username','email','password']
+    def create(self, validated_data): # 회원정보가 save될 때 원래 create가 쓰일것임 그때 set_password라는 기능을 추가한 느낌
+        user = User.objects.create(
+            email=validated_data['email'],
+            username=validated_data['username'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+
+        return user
+    
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=64)
+    password = serializers.CharField(max_length=128,write_only=True)
+
+    def validate(self, data):
+        email = data.get("email",None)
+        password = data.get("password",None)
+
+        if User.objects.filter(email=email).exists():
+            user=User.objects.get(email=email)
+
+            if not user.check_password(password):
+                raise serializers.ValidationError()
+            else:
+                return user

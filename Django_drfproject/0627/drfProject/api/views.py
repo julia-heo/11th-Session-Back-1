@@ -8,7 +8,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 class PostListView(views.APIView):
-    def get(self,request,format=None):
+    def get(self,request,format=None):  # get역할 하는걸 상속받아 오는것
         posts=Post.objects.all()     
         serializer=PostSerializer(posts, many=True)
         return Response(serializer.data)
@@ -71,3 +71,20 @@ class CommentDetailView(views.APIView):
         comment=get_object_or_404(Comment, pk=pk)
         comment.delete()
         return Response({"message":"댓글 삭제 성공"})
+    
+class SignUpView(views.APIView):
+    def post(self,request):
+        serializer=UserSerializer(data=request.data)     # 입력받은 댓글 데이터를 시리얼라이저에 넣어 변환
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message':'회원가입 성공','data':serializer.data})
+        return Response({'message':'회원가입 실패','error':serializer.errors})
+    
+
+class LoginView(views.APIView):
+    def post(self,request):
+        serializer=UserLoginSerializer(data=request.data)     # 입력받은 댓글 데이터를 시리얼라이저에 넣어 변환
+        if serializer.is_valid(): # 로그인이라 save는 안해도됨
+            return Response({'message':'로그인 성공','data':serializer.data})
+        return Response({'message':'로그인 실패','error':serializer.errors})
+    
